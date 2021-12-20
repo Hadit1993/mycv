@@ -20,7 +20,7 @@ export default class User {
 
   @AfterInsert()
   logInsert() {
-    console.log('Inseted user with id', this.id);
+    console.log('Instead user with id', this.id);
   }
 
   @AfterUpdate()

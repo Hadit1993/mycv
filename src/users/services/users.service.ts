@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { NotFoundError } from 'rxjs';
+import CustomHttpException from 'src/exceptions/custom_http.exception';
+
 import { Repository } from 'typeorm';
-import User from './user.entity';
+import User from '../user.entity';
 
 @Injectable()
 export class UsersService {
@@ -13,8 +14,9 @@ export class UsersService {
   }
 
   async findOne(id: number) {
+    if (!id) throw new CustomHttpException(404, 'user not found');
     const user = await this.repo.findOne(id);
-    if (!user) throw new NotFoundException('user not found');
+    if (!user) throw new CustomHttpException(404, 'user not found');
     return user;
   }
 
